@@ -1,0 +1,60 @@
+.container {
+  padding: 15px;
+  font-family: "Inter", sans-serif;
+  background-color: white;
+  max-height: 90vh;
+  color: #111827;
+}
+
+.header {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.leftPanel {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.previewTitle {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+  text-align: center;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.previewTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+.previewTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+.previewTable th,
+.previewTable td {
+  border: 1px solid black; /* Border between columns and rows */
+  padding: 8px; /* Optional: adds spacing within cells */
+  text-align: left; /* Optional: adjust text alignment */
+}

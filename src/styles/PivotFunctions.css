@@ -1,0 +1,141 @@
+.pivot-controls-container {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9f9;
+  padding: 15px 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  /* width: 300px; */
+  width: auto;
+  margin: 10px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+.pivot-controls-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.pivot-left {
+  width: 45%;
+}
+
+.pivot-right {
+  width: 45%;
+}
+
+.pivot-controls-container h4 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+.dropzone {
+  border: 2px dashed #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+  min-height: 90px;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  background-color: #fff;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.dropzone:hover {
+  background-color: #e7f3ff;
+  border-color: #535c68;
+}
+
+.dropzone h5 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.draggable-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #333;
+  cursor: grab;
+}
+
+.draggable-item:hover {
+  background-color: #f0f0f0;
+}
+
+.draggable-item span {
+  font-size: 16px;
+  color: #d9534f;
+}
+
+.draggable-item span:hover {
+  color: #c12e2a;
+}
+
+.agg-select {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  margin-left: 8px;
+}
+
+.zones-container {
+  margin-top: 10px;
+  max-height: 230px;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.zones-container h5 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.zones-container .draggable-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.zones-container .draggable-item:hover {
+  background-color: #e1f5fe;
+  border-color: #8395a7;
+}
+
+.zones-container .draggable-item:active {
+  background-color: #c1e1fe;
+  border-color: #8395a7;
+}
+
+.zones-container .draggable-item:focus {
+  background-color: #c1e1fe;
+  border-color: #8395a7;
+}
+
+.dropzone .draggable-item span {
+  margin-left: 8px;
+  color: #dc3545;
+}
+
+.dropzone .draggable-item span:hover {
+  color: #a71d2a;
+}
