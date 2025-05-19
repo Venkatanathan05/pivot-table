@@ -139,3 +139,23 @@
 .dropzone .draggable-item span:hover {
   color: #a71d2a;
 }
+
+.dropzone.drag-over {
+  background-color: #e7f3ff;
+  border-color: #007bff;
+}
+.date-config {
+  margin-top: 10px;
+}
+.date-config select {
+  margin-right: 10px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.dropzone.drag-over {
+  background-color: #e7f3ff;
+  border-color: #007bff;
+}

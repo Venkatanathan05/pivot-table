@@ -9,16 +9,69 @@ const PivotFunctions = ({
   setColumnFields,
   measures,
   setMeasures,
+  data,
 }) => {
   const [draggedField, setDraggedField] = useState(null);
+  const [dragOver, setDragOver] = useState(null);
+
+  const isNumericalField = (field) => {
+    // Block date-derived fields (e.g., Date_Year, Date_Month, Date_Day)
+    const isDateDerived = field.match(/_(Year|Month|Day)$/);
+    if (isDateDerived) return false;
+
+    // Block fields with date values (YYYY-MM-DD format)
+    const isDateField = data.some((row) => {
+      const value = row[field];
+      return typeof value === "string" && value.match(/^\d{4}-\d{2}-\d{2}$/);
+    });
+    if (isDateField) return false;
+
+    // Allow fields where all non-empty values can be converted to numbers
+    return data.every((row) => {
+      const value = row[field];
+      // Allow empty or null values
+      if (value === "" || value == null) return true;
+      // Check if value is a string that represents a number
+      return !isNaN(parseFloat(value)) && isFinite(value);
+    });
+  };
 
   const handleDragStart = (field, type) => {
     setDraggedField({ field, type });
+    setDragOver(null);
+  };
+
+  const handleDragOver = (e, targetType) => {
+    e.preventDefault();
+    setDragOver(targetType);
+  };
+
+  const handleDragLeave = () => {
+    setDragOver(null);
   };
 
   const handleDrop = (targetType) => {
     if (draggedField) {
       if (targetType === "measure") {
+        const isDateDerived = draggedField.field.match(/_(Year|Month|Day)$/);
+        const isDateField = data.some((row) => {
+          const value = row[draggedField.field];
+          return (
+            typeof value === "string" && value.match(/^\d{4}-\d{2}-\d{2}$/)
+          );
+        });
+        if (isDateDerived || isDateField) {
+          alert("Date-related fields cannot be added to measures.");
+          setDraggedField(null);
+          setDragOver(null);
+          return;
+        }
+        if (!isNumericalField(draggedField.field)) {
+          alert("Only numerical fields can be added to measures.");
+          setDraggedField(null);
+          setDragOver(null);
+          return;
+        }
         if (!measures.find((m) => m.field === draggedField.field)) {
           setMeasures([
             ...measures,
@@ -37,6 +90,7 @@ const PivotFunctions = ({
         setColumnFields([...columnFields, draggedField.field]);
       }
       setDraggedField(null);
+      setDragOver(null);
     }
   };
 
@@ -60,7 +114,6 @@ const PivotFunctions = ({
       <h4>PIVOT FUNCTIONS</h4>
       <div className="pivot-controls-wrapper">
         <div className="pivot-left">
-          {/* Rows and Columns */}
           <div
             style={{
               display: "flex",
@@ -69,9 +122,11 @@ const PivotFunctions = ({
             }}
           >
             <div
-              className="dropzone"
+              className={`dropzone ${dragOver === "row" ? "drag-over" : ""}`}
               onDrop={() => handleDrop("row")}
-              onDragOver={(e) => e.preventDefault()}
+              onDragOver={(e) => handleDragOver(e, "row")}
+              onDragLeave={handleDragLeave}
+              aria-label="Drop zone for row fields"
             >
               <h5>Rows</h5>
               {rowFields.map((field, index) => (
@@ -81,6 +136,8 @@ const PivotFunctions = ({
                     onClick={() =>
                       setRowFields(rowFields.filter((f) => f !== field))
                     }
+                    role="button"
+                    aria-label={`Remove ${field} from rows`}
                     style={{ cursor: "pointer" }}
                   >
                     ×
@@ -90,9 +147,11 @@ const PivotFunctions = ({
             </div>
 
             <div
-              className="dropzone"
+              className={`dropzone ${dragOver === "column" ? "drag-over" : ""}`}
               onDrop={() => handleDrop("column")}
-              onDragOver={(e) => e.preventDefault()}
+              onDragOver={(e) => handleDragOver(e, "column")}
+              onDragLeave={handleDragLeave}
+              aria-label="Drop zone for column fields"
             >
               <h5>Columns</h5>
               {columnFields.map((field, index) => (
@@ -102,6 +161,8 @@ const PivotFunctions = ({
                     onClick={() =>
                       setColumnFields(columnFields.filter((f) => f !== field))
                     }
+                    role="button"
+                    aria-label={`Remove ${field} from columns`}
                     style={{ cursor: "pointer" }}
                   >
                     ×
@@ -111,11 +172,12 @@ const PivotFunctions = ({
             </div>
           </div>
 
-          {/* Measures */}
           <div
-            className="dropzone"
+            className={`dropzone ${dragOver === "measure" ? "drag-over" : ""}`}
             onDrop={() => handleDrop("measure")}
-            onDragOver={(e) => e.preventDefault()}
+            onDragOver={(e) => handleDragOver(e, "measure")}
+            onDragLeave={handleDragLeave}
+            aria-label="Drop zone for measures"
           >
             <h5>Measures</h5>
             {measures.map(({ field, aggregation }, index) => (
@@ -127,6 +189,7 @@ const PivotFunctions = ({
                     handleAggregationChange(field, e.target.value)
                   }
                   className="agg-select"
+                  aria-label={`Aggregation for ${field}`}
                 >
                   <option value="SUM">SUM</option>
                   <option value="AVERAGE">AVERAGE</option>
@@ -138,6 +201,8 @@ const PivotFunctions = ({
                   onClick={() =>
                     setMeasures(measures.filter((m) => m.field !== field))
                   }
+                  role="button"
+                  aria-label={`Remove ${field} from measures`}
                   style={{ cursor: "pointer" }}
                 >
                   ×
@@ -147,7 +212,6 @@ const PivotFunctions = ({
           </div>
         </div>
         <div className="pivot-right">
-          {/* Available Fields */}
           <div className="zones-container">
             <h5>Available Fields</h5>
             {getAvailableFields().map((field, index) => (
@@ -156,6 +220,8 @@ const PivotFunctions = ({
                 className="draggable-item"
                 draggable
                 onDragStart={() => handleDragStart(field, "field")}
+                role="button"
+                aria-label={`Drag ${field}`}
               >
                 {field}
               </div>

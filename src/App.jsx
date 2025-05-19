@@ -77,10 +77,7 @@ const App = () => {
                 setColumnFields={setColumnFields}
                 measures={measures}
                 setMeasures={setMeasures}
-                dateField={dateField}
-                setDateField={setDateField}
-                datePart={datePart}
-                setDatePart={setDatePart}
+                data={data}
               />
             </div>
           </div>
