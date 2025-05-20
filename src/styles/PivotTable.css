@@ -1,75 +1,134 @@
-.pivot-table-container {
-  padding: 20px;
-  margin: 20px 0;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.pivot-table-root {
+  padding: 16px;
+  margin: 16px 0;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.pivot-table {
+.pivot-table-wrapper {
+  overflow-x: auto;
+}
+
+.pivot-table-modern {
   width: 100%;
   border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  color: #333;
 }
 
-.pivot-header,
-.pivot-subheader {
-  background-color: #f0f0f0;
+.pivot-header-row {
+  background-color: #f7f7f7;
 }
 
-.pivot-header-cell,
-.pivot-subheader-cell {
-  padding: 10px;
+.pivot-row-label-header {
+  padding: 6px 8px;
+  text-align: left;
+  font-weight: 600;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.pivot-col-header {
+  padding: 6px 8px;
   text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  background-color: #e0e0e0;
-  border: 1px solid #ddd;
+  font-weight: 600;
+  background-color: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.pivot-total-header {
+  background-color: #f0f0f0;
+  font-weight: 600;
 }
 
 .pivot-row-label {
-  background-color: #f9f9f9;
-  font-weight: bold;
-  padding: 8px;
+  background-color: #ffffff;
+  font-weight: 500;
+  padding: 6px 8px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
+  min-width: 100px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.pivot-row-label-level-0 {
+  padding-left: 8px;
+}
+
+.pivot-row-label-level-1 {
+  padding-left: 20px;
+}
+
+.pivot-row-label-level-2 {
+  padding-left: 32px;
+}
+
+.pivot-row-label-level-3 {
+  padding-left: 44px;
 }
 
 .pivot-data-cell {
   text-align: center;
-  padding: 8px;
-  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+  background-color: #ffffff;
 }
 
 .pivot-row-total {
   background-color: #f0f0f0;
-  font-weight: bold;
-  padding: 8px;
+  font-weight: 600;
+  padding: 6px 8px;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
 }
 
-.pivot-footer {
+.pivot-total-row {
   background-color: #f0f0f0;
-  font-weight: bold;
 }
 
-.pivot-footer-label {
+.pivot-total-label {
   text-align: left;
-  padding: 10px;
+  padding: 6px 8px;
+  font-weight: 600;
   background-color: #f0f0f0;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
 }
 
-.pivot-footer-cell {
-  padding: 10px;
+.pivot-column-total {
+  padding: 6px 8px;
   text-align: center;
-  border: 1px solid #ddd;
+  font-weight: 600;
+  border: 1px solid #e0e0e0;
+  background-color: #f0f0f0;
 }
 
-.pivot-footer-total {
+.pivot-grand-total {
   background-color: #f0f0f0;
-  font-weight: bold;
-  padding: 10px;
+  font-weight: 600;
+  padding: 6px 8px;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
+}
+
+.pivot-empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.pivot-empty-state h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.pivot-empty-state p {
+  font-size: 14px;
 }
