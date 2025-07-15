@@ -15,23 +15,18 @@ const PivotFunctions = ({
   const [dragOver, setDragOver] = useState(null);
 
   const isNumericalField = (field) => {
-    // Block date-derived fields (e.g., Date_Year, Date_Month, Date_Day)
     const isDateDerived = field.match(/_(Year|Month|Day)$/);
     if (isDateDerived) return false;
 
-    // Block fields with date values (YYYY-MM-DD format)
     const isDateField = data.some((row) => {
       const value = row[field];
       return typeof value === "string" && value.match(/^\d{4}-\d{2}-\d{2}$/);
     });
     if (isDateField) return false;
 
-    // Allow fields where all non-empty values can be converted to numbers
     return data.every((row) => {
       const value = row[field];
-      // Allow empty or null values
       if (value === "" || value == null) return true;
-      // Check if value is a string that represents a number
       return !isNaN(parseFloat(value)) && isFinite(value);
     });
   };

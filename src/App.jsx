@@ -10,8 +10,6 @@ const App = () => {
   const [rowFields, setRowFields] = useState([]);
   const [columnFields, setColumnFields] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const [dateField, setDateField] = useState(null);
-  const [datePart, setDatePart] = useState("");
 
   const handleUpload = (parsedData) => {
     setData(parsedData);
@@ -20,8 +18,6 @@ const App = () => {
     setRowFields([]);
     setColumnFields([]);
     setMeasures([]);
-    setDateField(null);
-    setDatePart("");
   };
 
   const showPivotTable = rowFields.length > 0 || columnFields.length > 0;
@@ -40,8 +36,6 @@ const App = () => {
                   rowFields={rowFields}
                   columnFields={columnFields}
                   measures={measures}
-                  dateField={dateField}
-                  datePart={datePart}
                 />
               ) : (
                 <div className="previewBox">

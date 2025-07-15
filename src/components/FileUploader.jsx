@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/FileUploader.css"; // Ensure path is correct
+import "../styles/FileUploader.css";
 
 const FileUploader = ({ onUpload }) => {
   const [uploadStatus, setUploadStatus] = useState("");
@@ -9,23 +9,19 @@ const FileUploader = ({ onUpload }) => {
     const [headerLine, ...lines] = text.trim().split("\n");
     const headers = headerLine.split(",");
 
-    // Iterate through each line and process the data
     return lines.map((line) => {
       const values = line.split(",");
 
-      // Create a new object based on headers and values
       const rowData = headers.reduce((acc, h, i) => {
         const value = values[i];
 
-        // Check if the value is a valid date and process the Year, Month, and Day
         if (isValidDate(value)) {
           const date = new Date(value);
           acc[`${h}_Year`] = date.getFullYear();
-          acc[`${h}_Month`] = date.getMonth() + 1; // Month is 0-based
+          acc[`${h}_Month`] = date.getMonth() + 1;
           acc[`${h}_Day`] = date.getDate();
         }
 
-        // Keep the original date field
         acc[h] = value;
 
         return acc;
@@ -35,9 +31,8 @@ const FileUploader = ({ onUpload }) => {
     });
   };
 
-  // Helper function to check if a value is a valid date
   const isValidDate = (dateString) => {
-    const regex = /^\d{4}-\d{2}-\d{2}$/; // Match format YYYY-MM-DD
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
     return dateString.match(regex) !== null;
   };
 

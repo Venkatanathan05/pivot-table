@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import "../styles/PivotTable.css";
 
-// Utility functions
 const formatHeader = (str) =>
   str.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -20,7 +19,7 @@ const getUniqueKeys = (data, fields) => {
   console.log(
     `Unique Keys for ${fields.join(", ")}:`,
     JSON.stringify(keys, null, 2)
-  ); // Debug log
+  );
   return keys;
 };
 
@@ -38,7 +37,7 @@ const preprocessDateFields = (data, fields) => {
     });
     return newRow;
   });
-  console.log("Processed Data:", JSON.stringify(processed, null, 2)); // Debug log
+  console.log("Processed Data:", JSON.stringify(processed, null, 2));
   return processed;
 };
 
@@ -76,7 +75,6 @@ const countLeafRows = (group, level, rowFields) =>
 const formatNumber = (num) =>
   num == null ? "" : Number.isInteger(num) ? num : num.toFixed(2);
 
-// Hook for pivot data
 const usePivotData = (rawData, rowFields, colFields, measures) => {
   return useMemo(() => {
     if (!rawData.length) {
@@ -101,7 +99,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       {}
     );
 
-    // Validate data for separator issues
     const hasSeparatorIssue = rawData.some((row) =>
       Object.values(row).some(
         (val) => typeof val === "string" && val.includes("/")
@@ -113,7 +110,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       );
     }
 
-    // Build pivot data
     const allFields = [...rowFields, ...colFields];
     const dateFields = [
       ...new Set(allFields.map((f) => f.split("_")[0])),
@@ -186,7 +182,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       });
     });
 
-    // Apply avg, min, max to pivot
     for (const rowStr in avgStore) {
       for (const colStr in avgStore[rowStr]) {
         for (const valField in avgStore[rowStr][colStr]) {
@@ -214,7 +209,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       }
     }
 
-    // Calculate totals (DRY)
     const calculateTotal = (values, valField) => {
       if (!values.length) return null;
       const func = aggregateFuncs[valField];
@@ -227,7 +221,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       return null;
     };
 
-    // Precompute row totals
     rowKeys.forEach((rowKey) => {
       const rowKeyStr = getKeyStr(rowKey);
       rowTotals[rowKeyStr] = {};
@@ -242,7 +235,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       });
     });
 
-    // Precompute column totals
     colKeys.forEach((colKey) => {
       const colKeyStr = getKeyStr(colKey);
       colTotals[colKeyStr] = {};
@@ -257,7 +249,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       });
     });
 
-    // Precompute grand totals
     valFields.forEach((valField) => {
       const total = calculateTotal(
         colKeys.flatMap((colKey) =>
@@ -273,10 +264,10 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
       grandTotals[valField] = total;
     });
 
-    console.log("Pivot Object:", JSON.stringify(pivot, null, 2)); // Debug log
-    console.log("Row Totals:", JSON.stringify(rowTotals, null, 2)); // Debug log
-    console.log("Col Totals:", JSON.stringify(colTotals, null, 2)); // Debug log
-    console.log("Grand Totals:", JSON.stringify(grandTotals, null, 2)); // Debug log
+    console.log("Pivot Object:", JSON.stringify(pivot, null, 2));
+    console.log("Row Totals:", JSON.stringify(rowTotals, null, 2));
+    console.log("Col Totals:", JSON.stringify(colTotals, null, 2));
+    console.log("Grand Totals:", JSON.stringify(grandTotals, null, 2));
 
     return {
       pivot,
@@ -291,7 +282,6 @@ const usePivotData = (rawData, rowFields, colFields, measures) => {
   }, [rawData, rowFields, colFields, measures]);
 };
 
-// Hook for header data
 const useHeaderData = (colFields, colKeys, valFields, aggregateFuncs) => {
   return useMemo(() => {
     const levels = colFields.length || 1;
@@ -336,12 +326,11 @@ const useHeaderData = (colFields, colKeys, valFields, aggregateFuncs) => {
       });
     }
 
-    console.log("Header Rows:", JSON.stringify(headerRows, null, 2)); // Debug log
+    console.log("Header Rows:", JSON.stringify(headerRows, null, 2));
     return headerRows;
   }, [colFields, colKeys, valFields, aggregateFuncs]);
 };
 
-// Rendering utility
 const renderCell = ({
   type,
   value,
@@ -468,7 +457,7 @@ const PivotTable = ({
       }
     }
 
-    console.log("Structured Rows Count:", rows.length); // Debug log
+    console.log("Structured Rows Count:", rows.length);
     return rows;
   };
 
@@ -574,7 +563,7 @@ const PivotTable = ({
         null,
         2
       )
-    ); // Debug log
+    );
     return (
       <tbody>
         {structuredRows.map((cells, i) => (
